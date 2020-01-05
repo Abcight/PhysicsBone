@@ -1,4 +1,4 @@
-# PhysicsBone v1.0.0
+# PhysicsBone v1.1.0
 Tested on Unity version 2019.3.0f1.
 
 ## What *exactly* does this component do?
@@ -19,11 +19,15 @@ In addition to that, you can tweak the component to your liking with these prope
 
 | Property               | Function      |
 | -------------         |:-------------:|
-| Collision radius      | Specifies the radius in which each bone will test for collision with the environment. |
-| Collision accuracy    | Specifies how accurately the bone will position itself after a collision happened. A high value is suggested. |
-| Stiffness             | Specifies how stiff/heavy the bone is. Low stiffness value results in very light bones. |
-| Gravity               | Specifies how fast the hair will fall. |
-| Force faloff          | Specifies how the force is distributed from the root towards its children in descending order. |
+| Damping      | Specifies how light the bone is. Low damping values will make the bone feel heavy. |
+| Gravity Scale | Specifies how fast the bone will fall. |
+| Force Faloff | Specifies how the force is distributed towards child bones in descending order. This setting usually works best unchanged. |
+| Do Collision Checks | Specifies whether the bones should collide with the environment. |
+| Collision Accuracy | Specifies how accurate the collision is in the CenterPushout collision mode. |
+| Collision Radius | Specifies the radius of each bone's spherical collision test. |
+| Collision Radius Distrib | Specified how the collision radius is distributed to children bones in descending order. |
+| React To Wind Zones | Specifies whether the bones should react to wind produced by the WindZone component. |
+| Wind Scale | Specifies how heavy effect the wind has over the bones. |
 
 ------------------------------------------------
     Copyright (c) 2020 Abcight
