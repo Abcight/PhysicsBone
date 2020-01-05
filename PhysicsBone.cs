@@ -1,5 +1,5 @@
 ﻿/*
- * PhysicsBone 1.2.0
+ * PhysicsBone 1.3.0
  * Script written by Abcight
  * https://github.com/Abcight/PhysicsBone
  * 
@@ -60,6 +60,9 @@ namespace Abcight
         [Tooltip("Specifies how the object will be pushed out during a collision. Piled mode is still experimental and shouldn't be used in production.")]
         private CollisionMode collisionMode = CollisionMode.CenterPushout;
         private enum CollisionMode { CenterPushout, Piled }
+
+        [Tooltip("Specifies which layers can collide with the bone.")]
+        [SerializeField] private LayerMask collisionLayerMask = ~0;
 
         [Tooltip("Specifies whether the bones should react to wind produced by the WindZone component.")]
         [SerializeField] private bool reactToWindZones = false;
@@ -223,7 +226,7 @@ namespace Abcight
             // Prevent from crashing
             collisionAccuracy = Mathf.Clamp(collisionAccuracy, 1, float.MaxValue);
 
-            Collider[] collisions = Physics.OverlapSphere(bones[i].position, collisionRadius * distrib);
+            Collider[] collisions = Physics.OverlapSphere(bones[i].position, collisionRadius * distrib, collisionLayerMask);
             foreach (Collider collider in collisions)
             {
                 if (collider is MeshCollider) continue;

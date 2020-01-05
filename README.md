@@ -26,6 +26,7 @@ In addition to that, you can tweak the component to your liking with these prope
 | Collision Accuracy | Specifies how accurate the collision is in the CenterPushout collision mode. |
 | Collision Radius | Specifies the radius of each bone's spherical collision test. |
 | Collision Radius Distrib | Specified how the collision radius is distributed to children bones in descending order. |
+| Collision Layer Mask | Specifies which layers can collide with the bone. |
 | React To Wind Zones | Specifies whether the bones should react to wind produced by the WindZone component. |
 | Wind Scale | Specifies how heavy effect the wind has over the bones. |
 | Distance Check Target | If this field is assigned, only bones under certain distance to it will update. |
