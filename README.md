@@ -1,4 +1,4 @@
-# PhysicsBone v1.1.0
+# PhysicsBone v1.2.0
 Tested on Unity version 2019.3.0f1.
 
 ## What *exactly* does this component do?
@@ -28,6 +28,8 @@ In addition to that, you can tweak the component to your liking with these prope
 | Collision Radius Distrib | Specified how the collision radius is distributed to children bones in descending order. |
 | React To Wind Zones | Specifies whether the bones should react to wind produced by the WindZone component. |
 | Wind Scale | Specifies how heavy effect the wind has over the bones. |
+| Distance Check Target | If this field is assigned, only bones under certain distance to it will update. |
+| Update Distance | Specifies the radius in which the bone needs to be relative to the check target to update. |
 
 ------------------------------------------------
     Copyright (c) 2020 Abcight

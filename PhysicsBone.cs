@@ -1,5 +1,5 @@
 ﻿/*
- * PhysicsBone 1.1.0
+ * PhysicsBone 1.2.0
  * Script written by Abcight
  * https://github.com/Abcight/PhysicsBone
  * 
@@ -67,6 +67,13 @@ namespace Abcight
         [Tooltip("Specifies how heavy effect the wind has over the bones.")]
         [SerializeField] private float windScale = 1;
 
+        [Space(10)]
+        [Header("Performance")]
+
+        [Tooltip("If this field is assigned, only bones under certain distance to it will update.")]
+        [SerializeField] private Transform distanceCheckTarget;
+        [Tooltip("Specifies the radius in which the bone needs to be relative to the check target to update.")]
+        [SerializeField] private float updateDistance = 15f;
 
         private Transform[] bones;
         private Vector3[] boneLocalPositions;
@@ -78,6 +85,8 @@ namespace Abcight
         private float rootLocalEulerY;
 
         private WindZone[] windZones;
+
+        private bool restored;
 
         // This is still not fully implemented
         private bool collisionInChildren;
@@ -104,9 +113,10 @@ namespace Abcight
             gravityRootRotation = bones[0].rotation;
         }
 
-        public float diff;
         public void LateUpdate()
         {
+            if(assertDistanceUpdateCheck()) return;
+
             Vector3 deltaMove = lastFrameBonePositions[0] - bones[0].position;
             bones[0].Rotate(deltaMove * 100);
 
@@ -134,6 +144,28 @@ namespace Abcight
             }
         }
 
+        private bool assertDistanceUpdateCheck()
+        {
+            if (distanceCheckTarget != null && Vector3.Distance(transform.position, distanceCheckTarget.position) > updateDistance)
+            {
+                if (!restored)
+                {
+                    for (int i = 0; i < bones.Length; i++)
+                    {
+                        bones[i].localPosition = boneLocalPositions[i];
+                        bones[i].localRotation = boneLocalRotations[i];
+                    }
+                    restored = true;
+                }
+                return true;
+            }
+            else
+            {
+                restored = false;
+            }
+            return false;
+        }
+
         private void handleGravity()
         {
             float gravityForce = gravityScale / Mathf.Clamp(damping, 0, 4) * Time.deltaTime;
@@ -151,6 +183,7 @@ namespace Abcight
         {
             foreach (WindZone zone in windZones)
             {
+                if (!zone.gameObject.activeInHierarchy) continue;
                 float turbulence = Random.Range(0f, 0.9f) * zone.windTurbulence;
                 float windSine = Mathf.Sin((Time.time * zone.windPulseFrequency * 100 + turbulence));
                 if (zone.mode == WindZoneMode.Directional || (Vector3.Distance(bones[0].position, zone.transform.position) <= zone.radius))
